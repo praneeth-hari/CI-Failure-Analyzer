@@ -36,3 +36,4 @@ def test_pick_sample_is_deterministic_and_order_independent():
 def test_pick_sample_ignores_repos_without_quota():
     picked = pick_sample(make_rows(), {"a": 5}, seed=3)
     assert not any(k.startswith(("b:", "c:")) for k in picked)
+
