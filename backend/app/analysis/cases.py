@@ -63,7 +63,8 @@ def build_cases(
         if size > MAX_READ_BYTES:
             stats["large"] += 1
         evidence = extract_evidence(text)
-        gate = is_gate_job(job_name)
+        upstream = gate_failed_upstream_jobs(text)
+        gate = is_gate_job(job_name) or bool(upstream)
         values: dict[str, Any] = {
             "job_id": job_id,
             "is_gate": gate,
@@ -72,7 +73,7 @@ def build_cases(
             "evidence_text": evidence.as_text(),
             "evidence_line_count": len(evidence.lines),
             "log_bytes": size,
-            "upstream_jobs": gate_failed_upstream_jobs(text) if gate else None,
+            "upstream_jobs": upstream if gate else None,
         }
         stmt_ins = (
             insert(FailureCase)
