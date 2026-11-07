@@ -1,0 +1,19 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: cfa-db
+    environment:
+      POSTGRES_USER: cia
+      POSTGRES_PASSWORD: cia
+      POSTGRES_DB: cia
+    ports:
+      - "5442:5432"
+    volumes:
+      - cfa_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cia -d cia"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+volumes:
+  cfa_pgdata:
