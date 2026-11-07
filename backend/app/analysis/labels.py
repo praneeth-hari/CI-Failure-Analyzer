@@ -9,3 +9,4 @@ LABELS: dict[str, str] = {
     "docs_build": "Documentation build or link check failed.",
     "other_unclear": "Cannot tell from the evidence, or does not fit any other class.",
 }
+
