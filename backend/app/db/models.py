@@ -75,3 +75,32 @@ class Job(Base):
     log_path: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     run: Mapped["WorkflowRun"] = relationship(back_populates="jobs")
+
+
+# --- failure cases: one row per failed job, holds trimmed evidence + label ---
+import sqlalchemy as sa
+from datetime import datetime
+from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy.orm import Mapped, mapped_column
+
+from app.db.base import Base
+
+
+class FailureCase(Base):
+    __tablename__ = "failure_cases"
+    __table_args__ = (sa.UniqueConstraint("job_id", name="uq_failure_cases_job_id"),)
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    job_id: Mapped[int] = mapped_column(sa.ForeignKey(Job.__table__.c.id), index=True)
+    is_gate: Mapped[bool] = mapped_column(default=False)
+    step_header: Mapped[str | None] = mapped_column(sa.Text)
+    error_marker_line: Mapped[int | None]
+    evidence_text: Mapped[str] = mapped_column(sa.Text)
+    evidence_line_count: Mapped[int]
+    log_bytes: Mapped[int] = mapped_column(sa.BigInteger)
+    upstream_jobs: Mapped[list[str] | None] = mapped_column(JSONB)
+    label: Mapped[str | None] = mapped_column(sa.String(40))
+    label_notes: Mapped[str | None] = mapped_column(sa.Text)
+    created_at: Mapped[datetime] = mapped_column(
+        sa.DateTime(timezone=True), server_default=sa.func.now()
+    )
