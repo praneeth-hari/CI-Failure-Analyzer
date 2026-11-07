@@ -48,8 +48,15 @@ class GitHubClient:
         wait=wait_exponential(multiplier=1, min=1, max=20),
         reraise=True,
     )
-    def _get(self, path: str, params: dict[str, Any] | None = None) -> httpx.Response:
-        resp = self._http.get(path, params=params)
+    def _get(
+        self,
+        path: str,
+        params: dict[str, Any] | None = None,
+        follow_redirects: bool = False,
+    ) -> httpx.Response:
+        resp = self._http.get(
+            path, params=params, follow_redirects=follow_redirects
+        )
         if resp.status_code == 403 and resp.headers.get("x-ratelimit-remaining") == "0":
             raise RateLimitError("GitHub rate limit reached; try again after it resets")
         resp.raise_for_status()
@@ -74,3 +81,29 @@ class GitHubClient:
             yield from runs
             if len(runs) < 100:
                 return
+
+    def list_jobs(self, owner: str, repo: str, run_id: int) -> list[dict[str, Any]]:
+        jobs: list[dict[str, Any]] = []
+        page = 1
+        while True:
+            resp = self._get(
+                f"/repos/{owner}/{repo}/actions/runs/{run_id}/jobs",
+                params={"filter": "latest", "per_page": 100, "page": page},
+            )
+            batch = resp.json()["jobs"]
+            jobs.extend(batch)
+            if len(batch) < 100:
+                return jobs
+            page += 1
+
+    def download_job_log(self, owner: str, repo: str, job_id: int) -> str | None:
+        try:
+            resp = self._get(
+                f"/repos/{owner}/{repo}/actions/jobs/{job_id}/logs",
+                follow_redirects=True,
+            )
+        except httpx.HTTPStatusError as exc:
+            if exc.response.status_code in (404, 410):
+                return None
+            raise
+        return resp.text
