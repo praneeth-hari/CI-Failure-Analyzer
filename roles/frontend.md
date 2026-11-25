@@ -1,6 +1,6 @@
 # Role: Frontend and UI for AI products
 
-Read this for LLM chat interfaces, metrics dashboards, demos (Streamlit, Gradio, React), accessibility, and visual design. Rules in `CLAUDE.md` always apply.
+Read this for LLM chat interfaces, metrics dashboards, demos (Streamlit, Gradio, React), accessibility, and visual design. Rules in `AGENTS.md` always apply.
 
 ## 0. First decision: is there a design system?
 

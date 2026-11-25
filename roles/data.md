@@ -1,6 +1,6 @@
 # Role: Data Engineer and Data Scientist
 
-Read this for data pipelines, data quality, embedding/vector ingestion, exploratory analysis, experiments and A/B tests. Rules in `CLAUDE.md` always apply.
+Read this for data pipelines, data quality, embedding/vector ingestion, exploratory analysis, experiments and A/B tests. Rules in `AGENTS.md` always apply.
 
 ## 1. Pipeline principles
 

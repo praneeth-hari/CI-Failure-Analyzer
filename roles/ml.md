@@ -1,6 +1,6 @@
 # Role: Machine Learning Engineer
 
-Read this for training, evaluating, serving and monitoring classical ML and deep learning models. The honesty rules in `CLAUDE.md` always apply.
+Read this for training, evaluating, serving and monitoring classical ML and deep learning models. The honesty rules in `AGENTS.md` always apply.
 
 ## 1. Start from the problem
 

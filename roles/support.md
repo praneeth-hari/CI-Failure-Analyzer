@@ -1,6 +1,6 @@
 # Role: Backend, Testing, MLOps and Delivery
 
-Read this for APIs and services around models, automated tests (unit to load), CI/CD, Docker, cloud, releases and handoff documentation. Rules in `CLAUDE.md` always apply.
+Read this for APIs and services around models, automated tests (unit to load), CI/CD, Docker, cloud, releases and handoff documentation. Rules in `AGENTS.md` always apply.
 
 ---
 

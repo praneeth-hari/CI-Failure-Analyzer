@@ -1,6 +1,6 @@
 # Role: GenAI / LLM Engineer and AI Architect
 
-Read this for LLM applications, RAG, agents and MCP, prompts, fine-tuning, serving, LLM evaluation, cost control and AI system design. The rules in `CLAUDE.md` always apply.
+Read this for LLM applications, RAG, agents and MCP, prompts, fine-tuning, serving, LLM evaluation, cost control and AI system design. The rules in `AGENTS.md` always apply.
 
 ## 0. Ground rules for this file
 
